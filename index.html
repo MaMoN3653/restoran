@@ -1172,9 +1172,9 @@
         </div>
     </section>
 
-    <!-- Аудио элемент для фоновой музыки -->
-    <audio id="gameAudio" loop>
-        <source src="https://docs.google.com/uc?export=download&id=1yx--N79qk2gYE9a8zrqhwW56BqisQlAe" type="audio/mpeg">
+    <!-- Аудио элемент с прямой ссылкой на скачивание из Google Drive -->
+    <audio id="gameAudio" preload="auto" loop>
+        <source src="https://docs.google.com/uc?export=open&id=1yx--N79qk2gYE9a8zrqhwW56BqisQlAe" type="audio/mp3">
     </audio>
 
     <!-- Бронирование -->
@@ -1460,9 +1460,11 @@
             document.getElementById('score').innerText = score;
             document.getElementById('time').innerText = survivalTime;
 
-            // Запуск музыки
+            // Принудительное воспроизведение по клику на кнопку «Играть»
             gameAudio.currentTime = 0;
-            gameAudio.play().catch(e => console.log("Автозапуск аудио заблокирован браузером"));
+            gameAudio.play().catch(err => {
+                console.log("Браузер заблокировал воспроизведение аудио:", err);
+            });
 
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -1593,7 +1595,7 @@
         function gameOver() {
             gameRunning = false;
             clearInterval(timerInterval);
-            gameAudio.pause(); // остановка музыки при проигрыше
+            gameAudio.pause();
             document.getElementById('overlay-title').innerHTML = `ПОЙМАЛИ!<br><span style="font-size:10px; color:#fff;">Счет: ${score} | Время: ${survivalTime}с</span>`;
             document.getElementById('game-overlay').style.display = 'flex';
         }
