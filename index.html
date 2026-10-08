@@ -1172,9 +1172,9 @@
         </div>
     </section>
 
-    <!-- Встроенный аудиопоток вашей песни -->
+    <!-- Аудиопоток из файла track.mp3 на GitHub -->
     <audio id="gameAudio" preload="auto" loop>
-        <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..." type="audio/mp3">
+        <source src="track.mp3" type="audio/mp3">
     </audio>
 
     <!-- Бронирование -->
@@ -1332,9 +1332,6 @@
         const ctx = canvas.getContext('2d');
         const gameAudio = document.getElementById('gameAudio');
         let musicMuted = false;
-
-        // Переводим аудиоисточник в Blob-поток из встроенного массива, чтобы избежать проблем с CORS и путями
-        const audioBase64Data = ""; // (Заменено на локальный объектный поток)
         
         function toggleAudio() {
             musicMuted = !musicMuted;
@@ -1344,6 +1341,9 @@
                 icon.className = 'fa-solid fa-volume-xmark';
             } else {
                 icon.className = 'fa-solid fa-volume-high';
+                if(gameAudio.paused) {
+                    gameAudio.play().catch(e => console.log(e));
+                }
             }
         }
 
@@ -1463,10 +1463,10 @@
             document.getElementById('score').innerText = score;
             document.getElementById('time').innerText = survivalTime;
 
-            // Запуск музыки по клику на кнопку «ИГРАТЬ»
+            // Запуск музыки из файла track.mp3 по клику на кнопку «ИГРАТЬ»
             gameAudio.currentTime = 0;
             gameAudio.play().catch(err => {
-                console.log("Браузер ожидает взаимодействия для запуска аудио");
+                console.log("Автозапуск заблокирован браузером до взаимодействия", err);
             });
 
             if (timerInterval) clearInterval(timerInterval);
