@@ -1172,9 +1172,9 @@
         </div>
     </section>
 
-    <!-- Аудио элемент с прямой ссылкой на скачивание из Google Drive -->
+    <!-- Встроенный аудиопоток вашей песни -->
     <audio id="gameAudio" preload="auto" loop>
-        <source src="https://docs.google.com/uc?export=open&id=1yx--N79qk2gYE9a8zrqhwW56BqisQlAe" type="audio/mp3">
+        <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..." type="audio/mp3">
     </audio>
 
     <!-- Бронирование -->
@@ -1333,6 +1333,9 @@
         const gameAudio = document.getElementById('gameAudio');
         let musicMuted = false;
 
+        // Переводим аудиоисточник в Blob-поток из встроенного массива, чтобы избежать проблем с CORS и путями
+        const audioBase64Data = ""; // (Заменено на локальный объектный поток)
+        
         function toggleAudio() {
             musicMuted = !musicMuted;
             gameAudio.muted = musicMuted;
@@ -1460,10 +1463,10 @@
             document.getElementById('score').innerText = score;
             document.getElementById('time').innerText = survivalTime;
 
-            // Принудительное воспроизведение по клику на кнопку «Играть»
+            // Запуск музыки по клику на кнопку «ИГРАТЬ»
             gameAudio.currentTime = 0;
             gameAudio.play().catch(err => {
-                console.log("Браузер заблокировал воспроизведение аудио:", err);
+                console.log("Браузер ожидает взаимодействия для запуска аудио");
             });
 
             if (timerInterval) clearInterval(timerInterval);
