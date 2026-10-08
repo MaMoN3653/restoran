@@ -1,918 +1,841 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ресторан «Смак» — Авторская кухня Кирилла Макаревича</title>
-    <!-- Подключаем Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Иконки FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #c5a059;
-            --primary-dark: #a3813e;
-            --dark: #121212;
-            --darker: #0a0a0a;
-            --light: #f9f8f6;
-            --accent: #e74c3c;
-            --gray: #888888;
-            --card-bg: #1c1c1c;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, .serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Навигация */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(18, 18, 18, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
-            transition: var(--transition);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            letter-spacing: 2px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--light);
-            font-weight: 500;
-            transition: var(--transition);
-            font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .cart-btn {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 8px 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .cart-btn:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        .burger {
-            display: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: var(--light);
-        }
-
-        /* Главный экран (Hero) */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 7vw, 75px);
-            margin-bottom: 20px;
-            color: #fff;
-            line-height: 1.1;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: clamp(16px, 2vw, 20px);
-            color: #ddd;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: var(--dark);
-            padding: 14px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            margin-left: 15px;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        /* Секция: О ресторане и владельце */
-        .about {
-            padding: 120px 5%;
-            background: var(--darker);
-        }
-
-        .about-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-img-box {
-            position: relative;
-        }
-
-        .about-img-box img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 1px solid rgba(197, 160, 89, 0.3);
-            object-fit: cover;
-            height: 500px;
-        }
-
-        .about-text h2 {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        .about-text h2 span {
-            color: var(--primary);
-        }
-
-        .about-text p {
-            color: #bbb;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        .chef-signature {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 24px;
-            color: var(--primary);
-            margin-top: 30px;
-        }
-
-        /* Меню */
-        .menu {
-            padding: 120px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: 45px;
-            margin-bottom: 15px;
-        }
-
-        .section-header p {
-            color: var(--gray);
-            font-size: 18px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .menu-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(197, 160, 89, 0.4);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .badge-special {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--accent);
-            color: #fff;
-            padding: 5px 12px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            z-index: 2;
-        }
-
-        .menu-img {
-            height: 220px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .menu-content {
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .menu-title-price {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 10px;
-        }
-
-        .menu-card h3 {
-            font-size: 20px;
-            color: #fff;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .menu-card p {
-            color: #999;
-            font-size: 14px;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .add-to-cart {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .add-to-cart:hover {
-            background: var(--primary);
-            color: var(--dark);
-        }
-
-        /* Галерея */
-        .gallery {
-            padding: 100px 5%;
-            background: var(--darker);
-        }
-
-        .gallery-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            height: 300px;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Бронирование столика */
-        .reservation {
-            padding: 120px 5%;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .reservation-form {
-            background: var(--card-bg);
-            padding: 50px;
-            border-radius: 20px;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            margin-top: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
-            text-align: left;
-        }
-
-        .form-group.full {
-            grid-column: span 2;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 14px;
-            background: var(--dark);
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .reservation-form .btn {
-            grid-column: span 2;
-            width: 100%;
-            padding: 16px;
-        }
-
-        /* Корзина (Модальное окно) */
-        .cart-modal {
-            position: fixed;
-            top: 0;
-            right: -450px;
-            width: 420px;
-            height: 100%;
-            background: var(--card-bg);
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
-            transition: right 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid rgba(197, 160, 89, 0.2);
-        }
-
-        .cart-modal.open {
-            right: 0;
-        }
-
-        .cart-header {
-            padding: 25px;
-            border-bottom: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .cart-items {
-            padding: 25px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        .cart-item-info h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-info span {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cart-item-controls button {
-            background: #333;
-            border: none;
-            color: #fff;
-            width: 25px;
-            height: 25px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .cart-footer {
-            padding: 25px;
-            border-top: 1px solid #333;
-            background: var(--dark);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .cart-total span:last-child {
-            color: var(--primary);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            z-index: 1500;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        /* Футер */
-        footer {
-            background: var(--darker);
-            padding: 60px 5% 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 20px;
-            font-size: 20px;
-        }
-
-        .social-icons a {
-            color: var(--light);
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            color: var(--primary);
-        }
-
-        .copyright {
-            color: var(--gray);
-            font-size: 14px;
-            margin-top: 20px;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 900px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .reservation-form {
-                grid-template-columns: 1fr;
-            }
-            .form-group.full {
-                grid-column: span 1;
-            }
-            .nav-menu {
-                position: fixed;
-                top: 75px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 75px);
-                background: var(--darker);
-                flex-direction: column;
-                justify-content: center;
-                transition: var(--transition);
-            }
-            .nav-menu.active {
-                left: 0;
-            }
-            .burger {
-                display: block;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ресторан «Смак» — Авторская кухня Кирилла Макаревича</title>
+<!-- Подключаем Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Иконки FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+--primary: #c5a059;
+--primary-dark: #a3813e;
+--dark: #121212;
+--darker: #0a0a0a;
+--light: #f9f8f6;
+--accent: #e74c3c;
+--gray: #888888;
+--card-bg: #1c1c1c;
+--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+​* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+​html {
+scroll-behavior: smooth;
+}
+​body {
+font-family: 'Plus Jakarta Sans', sans-serif;
+background-color: var(--dark);
+color: var(--light);
+line-height: 1.6;
+overflow-x: hidden;
+}
+​h1, h2, h3, h4, .serif {
+font-family: 'Playfair Display', serif;
+}
+​/* Навигация */
+header {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+z-index: 1000;
+background: rgba(18, 18, 18, 0.85);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+transition: var(--transition);
+}
+​.nav-container {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px 5%;
+}
+​.logo {
+font-size: 28px;
+font-weight: 700;
+color: var(--primary);
+text-decoration: none;
+letter-spacing: 2px;
+font-family: 'Playfair Display', serif;
+}
+​.nav-menu {
+display: flex;
+list-style: none;
+gap: 30px;
+align-items: center;
+}
+​.nav-link {
+text-decoration: none;
+color: var(--light);
+font-weight: 500;
+transition: var(--transition);
+font-size: 15px;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+​.nav-link:hover {
+color: var(--primary);
+}
+​.cart-btn {
+background: transparent;
+border: 1px solid var(--primary);
+color: var(--primary);
+padding: 8px 18px;
+border-radius: 30px;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
+font-weight: 600;
+transition: var(--transition);
+}
+​.cart-btn:hover {
+background: var(--primary);
+color: var(--dark);
+}
+​.burger {
+display: none;
+cursor: pointer;
+font-size: 24px;
+color: var(--light);
+}
+​/* Главный экран (Hero) */
+.hero {
+height: 100vh;
+background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 0 20px;
+position: relative;
+}
+​.hero-content {
+max-width: 800px;
+}
+​.hero h1 {
+font-size: clamp(40px, 7vw, 75px);
+margin-bottom: 20px;
+color: #fff;
+line-height: 1.1;
+}
+​.hero h1 span {
+color: var(--primary);
+}
+​.hero p {
+font-size: clamp(16px, 2vw, 20px);
+color: #ddd;
+margin-bottom: 40px;
+font-weight: 300;
+}
+​.btn {
+display: inline-block;
+background: var(--primary);
+color: var(--dark);
+padding: 14px 35px;
+border-radius: 30px;
+text-decoration: none;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1px;
+transition: var(--transition);
+border: none;
+cursor: pointer;
+}
+​.btn:hover {
+background: var(--primary-dark);
+transform: translateY(-3px);
+box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
+}
+​.btn-outline {
+background: transparent;
+border: 2px solid var(--primary);
+color: var(--primary);
+margin-left: 15px;
+}
+​.btn-outline:hover {
+background: var(--primary);
+color: var(--dark);
+}
+​/* Секция: О ресторане и владельце */
+.about {
+padding: 120px 5%;
+background: var(--darker);
+}
+​.about-grid {
+max-width: 1200px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 60px;
+align-items: center;
+}
+​.about-img-box {
+position: relative;
+background: #000;
+border-radius: 12px;
+overflow: hidden;
+border: 1px solid rgba(197, 160, 89, 0.3);
+box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+height: 520px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+​.about-img-box img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+}
+​.about-text h2 {
+font-size: 40px;
+margin-bottom: 20px;
+}
+​.about-text h2 span {
+color: var(--primary);
+}
+​.about-text p {
+color: #bbb;
+margin-bottom: 20px;
+font-size: 16px;
+}
+​.chef-signature {
+font-family: 'Playfair Display', serif;
+font-style: italic;
+font-size: 24px;
+color: var(--primary);
+margin-top: 30px;
+}
+​/* Меню */
+.menu {
+padding: 120px 5%;
+max-width: 1200px;
+margin: 0 auto;
+}
+​.section-header {
+text-align: center;
+margin-bottom: 60px;
+}
+​.section-header h2 {
+font-size: 45px;
+margin-bottom: 15px;
+}
+​.section-header p {
+color: var(--gray);
+font-size: 18px;
+}
+​.menu-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 30px;
+}
+​.menu-card {
+background: var(--card-bg);
+border-radius: 16px;
+overflow: hidden;
+border: 1px solid rgba(255, 255, 255, 0.05);
+transition: var(--transition);
+display: flex;
+flex-direction: column;
+position: relative;
+}
+​.menu-card:hover {
+transform: translateY(-8px);
+border-color: rgba(197, 160, 89, 0.4);
+box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+​.badge-special {
+position: absolute;
+top: 15px;
+left: 15px;
+background: var(--accent);
+color: #fff;
+padding: 5px 12px;
+font-size: 12px;
+font-weight: 700;
+border-radius: 20px;
+text-transform: uppercase;
+letter-spacing: 1px;
+z-index: 2;
+}
+​.badge-exclusive {
+position: absolute;
+top: 15px;
+left: 15px;
+background: var(--primary);
+color: var(--dark);
+padding: 5px 12px;
+font-size: 12px;
+font-weight: 700;
+border-radius: 20px;
+text-transform: uppercase;
+letter-spacing: 1px;
+z-index: 2;
+}
+​.menu-img {
+height: 220px;
+width: 100%;
+object-fit: cover;
+}
+​.menu-content {
+padding: 25px;
+display: flex;
+flex-direction: column;
+flex-grow: 1;
+}
+​.menu-title-price {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+margin-bottom: 10px;
+}
+​.menu-card h3 {
+font-size: 20px;
+color: #fff;
+}
+​.price {
+font-size: 20px;
+font-weight: 700;
+color: var(--primary);
+}
+​.menu-card p {
+color: #999;
+font-size: 14px;
+margin-bottom: 20px;
+flex-grow: 1;
+}
+​.add-to-cart {
+background: transparent;
+border: 1px solid var(--primary);
+color: var(--primary);
+padding: 10px;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+transition: var(--transition);
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+​.add-to-cart:hover {
+background: var(--primary);
+color: var(--dark);
+}
+​/* Галерея */
+.gallery {
+padding: 100px 5%;
+background: var(--darker);
+}
+​.gallery-grid {
+max-width: 1200px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+}
+​.gallery-item {
+height: 300px;
+border-radius: 12px;
+overflow: hidden;
+position: relative;
+}
+​.gallery-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: var(--transition);
+}
+​.gallery-item:hover img {
+transform: scale(1.08);
+}
+​/* Бронирование столика */
+.reservation {
+padding: 120px 5%;
+max-width: 800px;
+margin: 0 auto;
+text-align: center;
+}
+​.reservation-form {
+background: var(--card-bg);
+padding: 50px;
+border-radius: 20px;
+border: 1px solid rgba(197, 160, 89, 0.2);
+margin-top: 40px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+​.form-group {
+text-align: left;
+}
+​.form-group.full {
+grid-column: span 2;
+}
+​.form-group label {
+display: block;
+margin-bottom: 8px;
+font-size: 14px;
+color: #ccc;
+}
+​.form-group input, .form-group select {
+width: 100%;
+padding: 14px;
+background: var(--dark);
+border: 1px solid #333;
+border-radius: 8px;
+color: #fff;
+font-family: inherit;
+}
+​.form-group input:focus, .form-group select:focus {
+outline: none;
+border-color: var(--primary);
+}
+​.reservation-form .btn {
+grid-column: span 2;
+width: 100%;
+padding: 16px;
+}
+​/* Корзина (Модальное окно) */
+.cart-modal {
+position: fixed;
+top: 0;
+right: -450px;
+width: 420px;
+height: 100%;
+background: var(--card-bg);
+z-index: 2000;
+box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+transition: right 0.4s ease;
+display: flex;
+flex-direction: column;
+border-left: 1px solid rgba(197, 160, 89, 0.2);
+}
+​.cart-modal.open {
+right: 0;
+}
+​.cart-header {
+padding: 25px;
+border-bottom: 1px solid #333;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+​.close-cart {
+background: none;
+border: none;
+color: #fff;
+font-size: 22px;
+cursor: pointer;
+}
+​.cart-items {
+padding: 25px;
+flex-grow: 1;
+overflow-y: auto;
+}
+​.cart-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+padding-bottom: 15px;
+border-bottom: 1px solid #2a2a2a;
+}
+​.cart-item-info h4 {
+font-size: 16px;
+margin-bottom: 5px;
+}
+​.cart-item-info span {
+color: var(--primary);
+font-weight: 600;
+}
+​.cart-item-controls {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+​.cart-item-controls button {
+background: #333;
+border: none;
+color: #fff;
+width: 25px;
+height: 25px;
+border-radius: 4px;
+cursor: pointer;
+}
+​.cart-footer {
+padding: 25px;
+border-top: 1px solid #333;
+background: var(--dark);
+}
+​.cart-total {
+display: flex;
+justify-content: space-between;
+font-size: 18px;
+font-weight: 700;
+margin-bottom: 20px;
+}
+​.cart-total span:last-child {
+color: var(--primary);
+}
+​.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.6);
+backdrop-filter: blur(4px);
+z-index: 1500;
+display: none;
+}
+​.overlay.active {
+display: block;
+}
+​/* Футер */
+footer {
+background: var(--darker);
+padding: 60px 5% 30px;
+border-top: 1px solid rgba(255, 255, 255, 0.05);
+text-align: center;
+}
+​.footer-content {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+}
+​.social-icons {
+display: flex;
+gap: 20px;
+font-size: 20px;
+}
+​.social-icons a {
+color: var(--light);
+transition: var(--transition);
+}
+​.social-icons a:hover {
+color: var(--primary);
+}
+​.copyright {
+color: var(--gray);
+font-size: 14px;
+margin-top: 20px;
+}
+​/* Адаптивность */
+@media (max-width: 900px) {
+.about-grid {
+grid-template-columns: 1fr;
+}
+.reservation-form {
+grid-template-columns: 1fr;
+}
+.form-group.full {
+grid-column: span 1;
+}
+.nav-menu {
+position: fixed;
+top: 75px;
+left: -100%;
+width: 100%;
+height: calc(100vh - 75px);
+background: var(--darker);
+flex-direction: column;
+justify-content: center;
+transition: var(--transition);
+}
+.nav-menu.active {
+left: 0;
+}
+.burger {
+display: block;
+}
+}
+</style>
 </head>
 <body>
-
-    <!-- Навигация -->
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo">СМАК</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">О нас</a></li>
-                <li><a href="#menu" class="nav-link">Меню</a></li>
-                <li><a href="#gallery" class="nav-link">Галерея</a></li>
-                <li><a href="#reservation" class="nav-link">Бронь</a></li>
-            </ul>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="cart-btn" onclick="toggleCart()">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span id="cart-count">0</span>
-                </button>
-                <div class="burger" onclick="toggleMenu()">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Главный экран -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Ресторан высокой кухни <span>«Смак»</span></h1>
-            <p>Авторские гастрономические шедевры от шеф-повара и владельца Кирилла Макаревича. Попробуйте вкус настоящего искусства.</p>
-            <a href="#menu" class="btn">Смотреть меню</a>
-            <a href="#reservation" class="btn btn-outline">Забронировать</a>
-        </div>
-    </section>
-
-    <!-- О нас и владельце -->
-    <section class="about" id="about">
-        <div class="about-grid">
-            <div class="about-img-box">
-                <img src="https://lh3.googleusercontent.com/d/1Gw7W0toNqL4yghHQRHqzCCtmfm0y9cKu" alt="Кирилл Макаревич — владелец и шеф-повар">
-            </div>
-            <div class="about-text">
-                <h2>Искусство вкуса от <span>Кирилла Макаревича</span></h2>
-                <p>Добро пожаловать в «Смак» — место, где традиции высокой гастрономии сочетаются с самыми смелыми авторскими экспериментами. Каждый рецепт здесь продуман до мелочей, а ингредиенты отбираются лично основателем.</p>
-                <p>Наша цель — не просто накормить, а подарить гостям незабываемые эмоции, погрузив в удивительную атмосферу уюта, изысканности и безупречного сервиса.</p>
-                <div class="chef-signature">Кирилл Макаревич</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Меню -->
-    <section class="menu" id="menu">
-        <div class="section-header">
-            <h2>Фирменное меню</h2>
-            <p>Откройте для себя уникальные вкусовые сочетания</p>
-        </div>
-        <div class="menu-grid">
-            <!-- Запеченный еж в глине -->
-            <div class="menu-card">
-                <div class="badge-special">Хит сезона</div>
-                <img src="https://images.unsplash.com/photo-1574484284002-712d98457f38?auto=format&fit=crop&w=600&q=80" alt="Запеченный еж в глине" class="menu-img">
-                <div class="menu-content">
-                    <div class="menu-title-price">
-                        <h3>Запеченный ёж в глине</h3>
-                        <span class="price">48.00 BYN</span>
-                    </div>
-                    <p>Эксклюзивное фирменное блюдо от Кирилла Макаревича. Томится в печи в глиняном панцире со специями и лесными травами.</p>
-                    <button class="add-to-cart" onclick="addToCart('Запеченный ёж в глине', 48.00)">
-                        <i class="fa-solid fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-
-            <!-- Утка -->
-            <div class="menu-card">
-                <img src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?auto=format&fit=crop&w=600&q=80" alt="Утка в глазури" class="menu-img">
-                <div class="menu-content">
-                    <div class="menu-title-price">
-                        <h3>Утка под ягодной глазурью</h3>
-                        <span class="price">65.00 BYN</span>
-                    </div>
-                    <p>Нежнейшая фермерская утка, запеченная до хрустящей корочки с соусом из дикой брусники и пряными яблоками.</p>
-                    <button class="add-to-cart" onclick="addToCart('Утка под ягодной глазурью', 65.00)">
-                        <i class="fa-solid fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-
-            <!-- Стейк Рибай -->
-            <div class="menu-card">
-                <img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80" alt="Стейк Рибай" class="menu-img">
-                <div class="menu-content">
-                    <div class="menu-title-price">
-                        <h3>Стейк Рибай Прайм</h3>
-                        <span class="price">89.00 BYN</span>
-                    </div>
-                    <p>Премиальная мраморная говядина влажной выдержки, приготовленная на открытом огне с розмарином.</p>
-                    <button class="add-to-cart" onclick="addToCart('Стейк Рибай Прайм', 89.00)">
-                        <i class="fa-solid fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-
-            <!-- Десерт -->
-            <div class="menu-card">
-                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Шоколадный фондю" class="menu-img">
-                <div class="menu-content">
-                    <div class="menu-title-price">
-                        <h3>Трюфельный десерт «Смак»</h3>
-                        <span class="price">24.00 BYN</span>
-                    </div>
-                    <p>Авторский шоколадный мусс с добавлением трюфельного масла и хрустящим ореховым пралине.</p>
-                    <button class="add-to-cart" onclick="addToCart('Трюфельный десерт «Смак»', 24.00)">
-                        <i class="fa-solid fa-plus"></i> В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Галерея -->
-    <section class="gallery" id="gallery">
-        <div class="section-header">
-            <h2>Атмосфера ресторана</h2>
-            <p>Загляните в наш уютный зал</p>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Интерьер">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80" alt="Блюдо">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80" alt="Бар">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=600&q=80" alt="Подача">
-            </div>
-        </div>
-    </section>
-
-    <!-- Бронирование -->
-    <section class="reservation" id="reservation">
-        <div class="section-header">
-            <h2>Забронировать столик</h2>
-            <p>Проведите незабываемый вечер в ресторане «Смак»</p>
-        </div>
-        <form class="reservation-form" onsubmit="event.preventDefault(); alert('Спасибо! Столик успешно забронирован. Мы свяжемся с вами для подтверждения.');">
-            <div class="form-group">
-                <label>Ваше имя</label>
-                <input type="text" placeholder="Дмитрий" required>
-            </div>
-            <div class="form-group">
-                <label>Телефон</label>
-                <input type="tel" placeholder="+375 (29) 000-00-00" required>
-            </div>
-            <div class="form-group">
-                <label>Дата</label>
-                <input type="date" required>
-            </div>
-            <div class="form-group">
-                <label>Количество гостей</label>
-                <select>
-                    <option>1 персона</option>
-                    <option selected>2 персоны</option>
-                    <option>3-4 персоны</option>
-                    <option>5+ персон</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Забронировать столик</button>
-        </form>
-    </section>
-
-    <!-- Корзина (Сайдбар) -->
-    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-header">
-            <h3>Ваш заказ</h3>
-            <button class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="cart-items" id="cart-items-container">
-            <!-- Динамически заполняется -->
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Итого:</span>
-                <span id="cart-total-price">0.00 BYN</span>
-            </div>
-            <button class="btn" style="width: 100%;" onclick="checkout()">Оформить заказ</button>
-        </div>
-    </div>
-
-    <!-- Футер -->
-    <footer>
-        <div class="footer-content">
-            <a href="#" class="logo">СМАК</a>
-            <p>Ресторан Кирилла Макаревича. Все права защищены.</p>
-            <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-telegram"></i></a>
-            </div>
-            <div class="copyright">© 2026 Ресторан «Смак».</div>
-        </div>
-    </footer>
-
-    <!-- Скрипты корзины и меню -->
-    <script>
-        let cart = [];
-
-        function toggleMenu() {
-            document.querySelector('.nav-menu').classList.toggle('active');
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-modal').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ name, price, quantity: 1 });
-            }
-            updateCartUI();
-            toggleCart();
-        }
-
-        function changeQuantity(name, delta) {
-            const item = cart.find(item => item.name === name);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.name !== name);
-                }
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items-container');
-            const countBadge = document.getElementById('cart-count');
-            const totalPriceEl = document.getElementById('cart-total-price');
-
-            container.innerHTML = '';
-            let totalCount = 0;
-            let totalPrice = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="color: #777; text-align: center; margin-top: 40px;">Корзина пуста</p>';
-            }
-
-            cart.forEach(item => {
-                totalCount += item.quantity;
-                totalPrice += item.price * item.quantity;
-
-                const itemEl = document.createElement('div');
-                itemEl.className = 'cart-item';
-                itemEl.innerHTML = `
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <span>${item.price.toFixed(2)} BYN</span>
-                    </div>
-                    <div class="cart-item-controls">
-                        <button onclick="changeQuantity('${item.name}', -1)">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="changeQuantity('${item.name}', 1)">+</button>
-                    </div>
-                `;
-                container.appendChild(itemEl);
-            });
-
-            countBadge.textContent = totalCount;
-            totalPriceEl.textContent = totalPrice.toFixed(2) + ' BYN';
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Ваша корзина пуста!');
-                return;
-            }
-            alert('Спасибо за заказ! Ресторан «Смак» уже начал его приготовление.');
-            cart = [];
-            updateCartUI();
-            toggleCart();
-        }
-    </script>
+​<!-- Навигация -->
+<header>
+<div class="nav-container">
+<a href="#" class="logo">СМАК</a>
+<ul class="nav-menu">
+<li><a href="#about" class="nav-link">О нас</a></li>
+<li><a href="#menu" class="nav-link">Меню</a></li>
+<li><a href="#gallery" class="nav-link">Галерея</a></li>
+<li><a href="#reservation" class="nav-link">Бронь</a></li>
+</ul>
+<div style="display: flex; align-items: center; gap: 15px;">
+<button class="cart-btn" onclick="toggleCart()">
+<i class="fa-solid fa-bag-shopping"></i>
+<span id="cart-count">0</span>
+</button>
+<div class="burger" onclick="toggleMenu()">
+<i class="fa-solid fa-bars"></i>
+</div>
+</div>
+</div>
+</header>
+​<!-- Главный экран -->
+<section class="hero">
+<div class="hero-content">
+<h1>Ресторан высокой кухни <span>«Смак»</span></h1>
+<p>Авторские гастрономические шедевры от шеф-повара и владельца Кирилла Макаревича. Попробуйте вкус настоящего искусства.</p>
+<a href="#menu" class="btn">Смотреть меню</a>
+<a href="#reservation" class="btn btn-outline">Забронировать</a>
+</div>
+</section>
+​<!-- О нас и владельце -->
+<section class="about" id="about">
+<div class="about-grid">
+<div class="about-img-box">
+<img src="https://lh3.googleusercontent.com/d/1Gw7W0toNqL4yghHQRHqzCCtmfm0y9cKu" alt="Кирилл Макаревич — владелец и шеф-повар">
+</div>
+<div class="about-text">
+<h2>Искусство вкуса от <span>Кирилла Макаревича</span></h2>
+<p>Добро пожаловать в «Смак» — место, где традиции высокой гастрономии сочетаются с самыми смелыми авторскими экспериментами. Каждый рецепт здесь продуман до мелочей, а ингредиенты отбираются лично основателем.</p>
+<p>Наша цель — не просто накормить, а подарить гостям незабываемые эмоции, погрузив в удивительную атмосферу уюта, изысканности и безупречного сервиса.</p>
+<div class="chef-signature">Кирилл Макаревич</div>
+</div>
+</div>
+</section>
+​<!-- Меню -->
+<section class="menu" id="menu">
+<div class="section-header">
+<h2>Фирменное меню</h2>
+<p>Откройте для себя уникальные вкусовые сочетания</p>
+</div>
+<div class="menu-grid">
+<!-- Ёж запечённый в глине -->
+<div class="menu-card">
+<div class="badge-special">Хит сезона</div>
+<img src="https://images.unsplash.com/photo-1574484284002-712d98457f38?auto=format&fit=crop&w=600&q=80" alt="Ёж запечённый в глине" class="menu-img">
+<div class="menu-content">
+<div class="menu-title-price">
+<h3>Ёж запечённый в глине</h3>
+<span class="price">48.00 BYN</span>
+</div>
+<p>Эксклюзивное фирменное блюдо от Кирилла Макаревича. Томится в печи в глиняном панцире со специями и лесными травами.</p>
+<button class="add-to-cart" onclick="addToCart('Ёж запечённый в глине', 48.00)">
+<i class="fa-solid fa-plus"></i> В корзину
+</button>
+</div>
+</div>
+​<!-- Щука фаршированная ежами -->
+<div class="menu-card">
+<img src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?auto=format&fit=crop&w=600&q=80" alt="Щука фаршированная ежами" class="menu-img">
+<div class="menu-content">
+<div class="menu-title-price">
+<h3>Щука фаршированная ежами</h3>
+<span class="price">72.00 BYN</span>
+</div>
+<p>Редкое речное блюдо: отборная речная щука, щедро фаршированная нежными лесными ежами в сливочном соусе.</p>
+<button class="add-to-cart" onclick="addToCart('Щука фаршированная ежами', 72.00)">
+<i class="fa-solid fa-plus"></i> В корзину
+</button>
+</div>
+</div>
+​<!-- Ёж в клюквенном соку -->
+<div class="menu-card">
+<img src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=600&q=80" alt="Ёж в клюквенном соку" class="menu-img">
+<div class="menu-content">
+<div class="menu-title-price">
+<h3>Ёж в клюквенном соку</h3>
+<span class="price">54.00 BYN</span>
+</div>
+<p>Сочное блюдо с яркой кислинкой свежей дикой клюквы, подчеркивающей изысканный вкус главного ингредиента.</p>
+<button class="add-to-cart" onclick="addToCart('Ёж в клюквенном соку', 54.00)">
+<i class="fa-solid fa-plus"></i> В корзину
+</button>
+</div>
+</div>
+​<!-- Ежиный сок -->
+<div class="menu-card">
+<img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Ежиный сок" class="menu-img">
+<div class="menu-content">
+<div class="menu-title-price">
+<h3>Ежиный сок</h3>
+<span class="price">28.00 BYN</span>
+</div>
+<p>Концентрированный авторский напиток-эликсир высокой крепости и вкуса. Подается охлажденным со специями.</p>
+<button class="add-to-cart" onclick="addToCart('Ежиный сок', 28.00)">
+<i class="fa-solid fa-plus"></i> В корзину
+</button>
+</div>
+</div>
+​<!-- Эксклюзив: Ёж запеченный теннисными мячами -->
+<div class="menu-card" style="grid-column: 1 / -1; border-color: var(--primary);">
+<div class="badge-exclusive">VIP Эксклюзив</div>
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+<img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Ёж запеченный теннисными мячами" class="menu-img" style="height: 100%; min-height: 220px;">
+<div class="menu-content" style="justify-content: center;">
+<div class="menu-title-price">
+<h3>Ёж запеченный теннисными мячами</h3>
+<span class="price">150.00 BYN</span>
+</div>
+<p>Главный экспериментальный шедевр от шефа Кирилла Макаревича. Запекается при экстремальной температуре вместе с профессиональными теннисными мячами для придания упругости текстуре и неповторимого спортивного аромата. Подается с фирменной подачей.</p>
+<button class="add-to-cart" onclick="addToCart('Ёж запеченный теннисными мячами', 150.00)" style="max-width: 250px;">
+<i class="fa-solid fa-plus"></i> В корзину
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+​<!-- Галерея -->
+<section class="gallery" id="gallery">
+<div class="section-header">
+<h2>Атмосфера ресторана</h2>
+<p>Загляните в наш уютный зал</p>
+</div>
+<div class="gallery-grid">
+<div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Интерьер">
+</div>
+<div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80" alt="Блюдо">
+</div>
+<div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=600&q=80" alt="Бар">
+</div>
+<div class="gallery-item">
+<img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=600&q=80" alt="Подача">
+</div>
+</div>
+</section>
+​<!-- Бронирование -->
+<section class="reservation" id="reservation">
+<div class="section-header">
+<h2>Забронировать столик</h2>
+<p>Проведите незабываемый вечер в ресторане «Смак»</p>
+</div>
+<form class="reservation-form" onsubmit="event.preventDefault(); alert('Спасибо! Столик успешно забронирован. Мы свяжемся с вами для подтверждения.');">
+<div class="form-group">
+<label>Ваше имя</label>
+<input type="text" placeholder="Дмитрий" required>
+</div>
+<div class="form-group">
+<label>Телефон</label>
+<input type="tel" placeholder="+375 (29) 000-00-00" required>
+</div>
+<div class="form-group">
+<label>Дата</label>
+<input type="date" required>
+</div>
+<div class="form-group">
+<label>Количество гостей</label>
+<select>
+<option>1 персона</option>
+<option selected>2 персоны</option>
+<option>3-4 персоны</option>
+<option>5+ персон</option>
+</select>
+</div>
+<button type="submit" class="btn">Забронировать столик</button>
+</form>
+</section>
+​<!-- Корзина (Сайдбар) -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-modal" id="cart-modal">
+<div class="cart-header">
+<h3>Ваш заказ</h3>
+<button class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="cart-items" id="cart-items-container">
+<!-- Динамически заполняется -->
+</div>
+<div class="cart-footer">
+<div class="cart-total">
+<span>Итого:</span>
+<span id="cart-total-price">0.00 BYN</span>
+</div>
+<button class="btn" style="width: 100%;" onclick="checkout()">Оформить заказ</button>
+</div>
+</div>
+​<!-- Футер -->
+<footer>
+<div class="footer-content">
+<a href="#" class="logo">СМАК</a>
+<p>Ресторан Кирилла Макаревича. Все права защищены.</p>
+<div class="social-icons">
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+<a href="#"><i class="fa-brands fa-facebook"></i></a>
+<a href="#"><i class="fa-brands fa-telegram"></i></a>
+</div>
+<div class="copyright">© 2026 Ресторан «Смак».</div>
+</div>
+</footer>
+​<!-- Скрипты корзины и меню -->
+<script>
+let cart = [];
+​function toggleMenu() {
+document.querySelector('.nav-menu').classList.toggle('active');
+}
+​function toggleCart() {
+document.getElementById('cart-modal').classList.toggle('open');
+document.getElementById('overlay').classList.toggle('active');
+}
+​function addToCart(name, price) {
+const existingItem = cart.find(item => item.name === name);
+if (existingItem) {
+existingItem.quantity += 1;
+} else {
+cart.push({ name, price, quantity: 1 });
+}
+updateCartUI();
+toggleCart();
+}
+​function changeQuantity(name, delta) {
+const item = cart.find(item => item.name === name);
+if (item) {
+item.quantity += delta;
+if (item.quantity <= 0) {
+cart = cart.filter(i => i.name !== name);
+}
+}
+updateCartUI();
+}
+​function updateCartUI() {
+const container = document.getElementById('cart-items-container');
+const countBadge = document.getElementById('cart-count');
+const totalPriceEl = document.getElementById('cart-total-price');
+​container.innerHTML = '';
+let totalCount = 0;
+let totalPrice = 0;
+​if (cart.length === 0) {
+container.innerHTML = '<p style="color: #777; text-align: center; margin-top: 40px;">Корзина пуста</p>';
+}
+​cart.forEach(item => {
+totalCount += item.quantity;
+totalPrice += item.price * item.quantity;
+​const itemEl = document.createElement('div');
+itemEl.className = 'cart-item';
+itemEl.innerHTML = <div class="cart-item-info"> <h4>${item.name}</h4> <span>${item.price.toFixed(2)} BYN</span> </div> <div class="cart-item-controls"> <button onclick="changeQuantity('${item.name}', -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity('${item.name}', 1)">+</button> </div>;
+container.appendChild(itemEl);
+});
+​countBadge.textContent = totalCount;
+totalPriceEl.textContent = totalPrice.toFixed(2) + ' BYN';
+}
+​function checkout() {
+if (cart.length === 0) {
+alert('Ваша корзина пуста!');
+return;
+}
+alert('Спасибо за заказ! Ресторан «Смак» уже начал его приготовление.');
+cart = [];
+updateCartUI();
+toggleCart();
+}
+</script>
 </body>
 </html>
