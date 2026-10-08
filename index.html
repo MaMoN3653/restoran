@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ресторан «Смак» — Авторская кухня Кирилла Макаревича</title>
     <!-- Подключаем Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Иконки FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,6 +25,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         html {
@@ -505,6 +507,131 @@
             padding: 16px;
         }
 
+        /* МИНИ-ИГРА (Интегрированная секция) */
+        .minigame-section {
+            padding: 120px 5%;
+            background: var(--darker);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-wrapper {
+            background: #0d0f18;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid rgba(197, 160, 89, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Press Start 2P', monospace;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            max-width: 460px;
+            width: 100%;
+        }
+
+        .game-title {
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-shadow: 2px 2px #ff0055;
+            text-align: center;
+        }
+
+        #game-container {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            background: #161b22;
+            border: 4px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        canvas#gameCanvas {
+            display: block;
+            background: radial-gradient(circle, #21262d 0%, #0d1117 100%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-panel {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+            font-size: 11px;
+            width: 100%;
+            justify-content: space-around;
+        }
+        .score-box, .time-box {
+            background: #21262d;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #30363d;
+        }
+        
+        .joystick-container {
+            margin-top: 15px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+        }
+        .joystick-thumb {
+            width: 50px;
+            height: 50px;
+            background: #1f6feb;
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.05s linear;
+        }
+
+        #game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.92);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+        }
+        #game-overlay h2 {
+            font-size: 14px;
+            color: #ff7b72;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .start-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px #196127;
+        }
+        .start-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 #196127;
+        }
+
         /* Корзина (Модальное окно) */
         .cart-modal {
             position: fixed;
@@ -696,6 +823,7 @@
                 <li><a href="#menu" class="nav-link">Меню</a></li>
                 <li><a href="#testimonials" class="nav-link">Отзывы</a></li>
                 <li><a href="#gallery" class="nav-link">Галерея</a></li>
+                <li><a href="#minigame" class="nav-link" style="color: var(--primary);">Игра</a></li>
                 <li><a href="#reservation" class="nav-link">Бронь</a></li>
             </ul>
             <div style="display: flex; align-items: center; gap: 15px;">
@@ -716,7 +844,7 @@
             <h1>Ресторан высокой кухни <span>«Смак»</span></h1>
             <p>Авторские гастрономические шедевры от шеф-повара и владельца Кирилла Макаревича. Попробуйте вкус настоящего искусства.</p>
             <a href="#menu" class="btn">Смотреть меню</a>
-            <a href="#reservation" class="btn btn-outline">Забронировать</a>
+            <a href="#minigame" class="btn btn-outline">Играть с бомжами</a>
         </div>
     </section>
 
@@ -985,6 +1113,35 @@
         </div>
     </section>
 
+    <!-- МИНИ-ИГРА -->
+    <section class="minigame-section" id="minigame">
+        <div class="section-header">
+            <h2>Развлечения от шефа</h2>
+            <p>Помогите Кириллу убежать от бомжей и собрать монеты</p>
+        </div>
+        
+        <div class="game-wrapper">
+            <div class="game-title">КИРИЛЛ ПРОТИВ БОМЖЕЙ</div>
+            <div id="game-container">
+                <div id="game-overlay">
+                    <h2 id="overlay-title">УВЕРНИСЬ ОТ БОМЖЕЙ!<br><span style="font-size:9px; color:#8b949e;">WASD / Стрелки или джойстик</span></h2>
+                    <button class="start-btn" onclick="startGame()">ИГРАТЬ</button>
+                </div>
+                <canvas id="gameCanvas" width="380" height="380"></canvas>
+            </div>
+
+            <div class="ui-panel">
+                <div class="score-box">МОНЕТЫ: <span id="score">0</span></div>
+                <div class="time-box">ВРЕМЯ: <span id="time">0</span>с</div>
+            </div>
+
+            <!-- Джойстик для мобилок и мышки -->
+            <div class="joystick-container" id="joystick">
+                <div class="joystick-thumb" id="joystickThumb"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Бронирование -->
     <section class="reservation" id="reservation">
         <div class="section-header">
@@ -1050,8 +1207,9 @@
         </div>
     </footer>
 
-    <!-- Скрипты корзины и меню -->
+    <!-- Скрипты сайта и мини-игры -->
     <script>
+        /* Логика корзины и меню */
         let cart = [];
 
         function toggleMenu() {
@@ -1131,6 +1289,266 @@
             cart = [];
             updateCartUI();
             toggleCart();
+        }
+
+
+        /* Логика мини-игры с адекватной скоростью */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let gameRunning = false;
+        let score = 0;
+        let survivalTime = 0;
+        let timerInterval = null;
+
+        // Кирилл (скорость выставлена адекватной: 3.2 — маневренный)
+        let kirill = {
+            x: 190,
+            y: 190,
+            size: 30,
+            speed: 2,
+            dx: 0,
+            dy: 0
+        };
+
+        let bums = [];
+        let coins = [];
+
+        const kirillImg = new Image();
+        kirillImg.src = 'https://lh3.googleusercontent.com/d/1Gw7W0toNqL4yghHQRHqzCCtmfm0y9cKu';
+
+        const bumImg = new Image();
+        bumImg.src = 'https://lh3.googleusercontent.com/d/1FsRr-sn0LJRHw-dKNYA1dlKJJc4TWQKj';
+
+        const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false };
+
+        window.addEventListener('keydown', (e) => {
+            if (keys.hasOwnProperty(e.key)) keys[e.key] = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            if (keys.hasOwnProperty(e.key)) keys[e.key] = false;
+        });
+
+        // Джойстик логика
+        const joystick = document.getElementById('joystick');
+        const thumb = document.getElementById('joystickThumb');
+        let joystickActive = false;
+        let joyCenter = { x: 0, y: 0 };
+
+        joystick.addEventListener('pointerdown', (e) => {
+            joystickActive = true;
+            const rect = joystick.getBoundingClientRect();
+            joyCenter = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            updateJoystick(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!joystickActive) return;
+            updateJoystick(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('pointerup', () => {
+            if (!joystickActive) return;
+            joystickActive = false;
+            thumb.style.transform = `translate(0px, 0px)`;
+            kirill.dx = 0;
+            kirill.dy = 0;
+        });
+
+        function updateJoystick(clientX, clientY) {
+            const maxDist = 35;
+            let dx = clientX - joyCenter.x;
+            let dy = clientY - joyCenter.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > maxDist) {
+                dx = (dx / dist) * maxDist;
+                dy = (dy / dist) * maxDist;
+            }
+
+            thumb.style.transform = `translate(${dx}px, ${dy}px)`;
+            kirill.dx = (dx / maxDist) * kirill.speed;
+            kirill.dy = (dy / maxDist) * kirill.speed;
+        }
+
+        function spawnCoin() {
+            coins.push({
+                x: Math.random() * 320 + 30,
+                y: Math.random() * 320 + 30,
+                size: 10
+            });
+        }
+
+        function spawnBum() {
+            let x, y;
+            if (Math.random() < 0.5) {
+                x = Math.random() < 0.5 ? -25 : 405;
+                y = Math.random() * 380;
+            } else {
+                x = Math.random() * 380;
+                y = Math.random() < 0.5 ? -25 : 405;
+            }
+            bums.push({
+                x: x,
+                y: y,
+                size: 26,
+                // Скорость бомжей сбалансирована (1.4 - 1.9), чтобы они не догоняли мгновенно
+                speed: 1.4 + Math.random() * 0.5
+            });
+        }
+
+        function startGame() {
+            score = 0;
+            survivalTime = 0;
+            kirill.x = 190;
+            kirill.y = 190;
+            bums = [];
+            coins = [];
+            
+            spawnBum();
+            spawnBum();
+            spawnCoin();
+            spawnCoin();
+
+            gameRunning = true;
+            document.getElementById('game-overlay').style.display = 'none';
+            document.getElementById('score').innerText = score;
+            document.getElementById('time').innerText = survivalTime;
+
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (gameRunning) {
+                    survivalTime++;
+                    document.getElementById('time').innerText = survivalTime;
+                    if (survivalTime % 10 === 0) {
+                        spawnBum(); // новые бомжи появляются реже для баланса
+                    }
+                }
+            }, 1000);
+
+            loop();
+        }
+
+        function update() {
+            if (!joystickActive) {
+                let moveX = 0;
+                let moveY = 0;
+                if (keys.w || keys.ArrowUp) moveY -= 1;
+                if (keys.s || keys.ArrowDown) moveY += 1;
+                if (keys.a || keys.ArrowLeft) moveX -= 1;
+                if (keys.d || keys.ArrowRight) moveX += 1;
+
+                if (moveX !== 0 && moveY !== 0) {
+                    moveX *= 0.7071;
+                    moveY *= 0.7071;
+                }
+                kirill.dx = moveX * kirill.speed;
+                kirill.dy = moveY * kirill.speed;
+            }
+
+            kirill.x += kirill.dx;
+            kirill.y += kirill.dy;
+            kirill.x = Math.max(kirill.size/2, Math.min(canvas.width - kirill.size/2, kirill.x));
+            kirill.y = Math.max(kirill.size/2, Math.min(canvas.height - kirill.size/2, kirill.y));
+
+            bums.forEach(bum => {
+                let angle = Math.atan2(kirill.y - bum.y, kirill.x - bum.x);
+                bum.x += Math.cos(angle) * bum.speed;
+                bum.y += Math.sin(angle) * bum.speed;
+
+                let dist = Math.hypot(kirill.x - bum.x, kirill.y - bum.y);
+                if (dist < (kirill.size/2 + bum.size/2 - 6)) {
+                    gameOver();
+                }
+            });
+
+            for (let i = coins.length - 1; i >= 0; i--) {
+                let c = coins[i];
+                let dist = Math.hypot(kirill.x - c.x, kirill.y - c.y);
+                if (dist < kirill.size/2 + c.size) {
+                    score += 10;
+                    document.getElementById('score').innerText = score;
+                    coins.splice(i, 1);
+                    spawnCoin();
+                    if (score % 40 === 0) {
+                        spawnBum();
+                    }
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Монетки
+            coins.forEach(c => {
+                ctx.fillStyle = '#ffcc00';
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#d29922';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = '#000';
+                ctx.font = '9px "Press Start 2P"';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('$', c.x, c.y);
+            });
+
+            // Бомжи
+            bums.forEach(bum => {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(bum.x, bum.y, bum.size, 0, Math.PI * 2);
+                ctx.clip();
+                if (bumImg.complete) {
+                    ctx.drawImage(bumImg, bum.x - bum.size, bum.y - bum.size, bum.size * 2, bum.size * 2);
+                } else {
+                    ctx.fillStyle = '#8b5cf6';
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                ctx.strokeStyle = '#ff5555';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(bum.x, bum.y, bum.size, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Кирилл
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(kirill.x, kirill.y, kirill.size, 0, Math.PI * 2);
+            ctx.clip();
+            if (kirillImg.complete) {
+                ctx.drawImage(kirillImg, kirill.x - kirill.size, kirill.y - kirill.size, kirill.size * 2, kirill.size * 2);
+            } else {
+                ctx.fillStyle = '#58a6ff';
+                ctx.fill();
+            }
+            ctx.restore();
+
+            ctx.strokeStyle = '#58a6ff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(kirill.x, kirill.y, kirill.size, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        function loop() {
+            if (!gameRunning) return;
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('overlay-title').innerHTML = `ПОЙМАЛИ!<br><span style="font-size:10px; color:#fff;">Счет: ${score} | Время: ${survivalTime}с</span>`;
+            document.getElementById('game-overlay').style.display = 'flex';
         }
     </script>
 </body>
