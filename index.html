@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ресторан Кирилла Макаревича</title>
+<style>
+:root {
+--bg-color: #121212;
+--card-bg: #1e1e1e;
+--accent-color: #d4af37;
+--accent-hover: #f39c12;
+--text-color: #e0e0e0;
+--text-muted: #aaaaaa;
+}
+​* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+​body {
+background-color: var(--bg-color);
+color: var(--text-color);
+line-height: 1.6;
+}
+​header {
+background: rgba(18, 18, 18, 0.95);
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 1000;
+border-bottom: 1px solid #333;
+}
+​.nav-container {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+}
+​.logo {
+font-size: 1.5rem;
+font-weight: bold;
+color: var(--accent-color);
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+​.nav-links {
+list-style: none;
+display: flex;
+gap: 30px;
+}
+​.nav-links a {
+text-decoration: none;
+color: var(--text-color);
+transition: color 0.3s;
+font-size: 0.95rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+​.nav-links a:hover {
+color: var(--accent-color);
+}
+​.hero {
+height: 100vh;
+background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), #1a1a1a center/cover no-repeat;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 0 20px;
+margin-top: 60px;
+}
+​.hero h1 {
+font-size: 3.5rem;
+color: #fff;
+margin-bottom: 20px;
+letter-spacing: 3px;
+}
+​.hero p {
+font-size: 1.2rem;
+color: var(--text-muted);
+margin-bottom: 30px;
+max-width: 600px;
+}
+​.btn {
+background-color: var(--accent-color);
+color: #121212;
+padding: 12px 30px;
+border: none;
+border-radius: 4px;
+font-weight: bold;
+text-transform: uppercase;
+cursor: pointer;
+text-decoration: none;
+transition: background 0.3s;
+letter-spacing: 1px;
+}
+​.btn:hover {
+background-color: var(--accent-hover);
+}
+​.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 80px 20px;
+}
+​section h2 {
+text-align: center;
+font-size: 2.5rem;
+margin-bottom: 50px;
+color: var(--accent-color);
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+​.about-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 50px;
+align-items: center;
+}
+​.photo-placeholder {
+background-color: var(--card-bg);
+border: 2px dashed #444;
+height: 350px;
+display: flex;
+justify-content: center;
+align-items: center;
+color: var(--text-muted);
+text-align: center;
+padding: 20px;
+border-radius: 8px;
+}
+​.menu-category {
+margin-bottom: 50px;
+}
+​.menu-category h3 {
+font-size: 1.8rem;
+margin-bottom: 25px;
+border-bottom: 1px solid #333;
+padding-bottom: 10px;
+color: #fff;
+}
+​.menu-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 30px;
+}
+​.menu-item {
+background: var(--card-bg);
+padding: 25px;
+border-radius: 8px;
+position: relative;
+border: 1px solid #2a2a2a;
+transition: transform 0.3s;
+}
+​.menu-item:hover {
+transform: translateY(-5px);
+}
+​.menu-item.bestseller {
+border: 2px solid var(--accent-color);
+}
+​.badge {
+position: absolute;
+top: -12px;
+right: 20px;
+background: var(--accent-color);
+color: #121212;
+padding: 4px 12px;
+font-size: 0.75rem;
+font-weight: bold;
+text-transform: uppercase;
+border-radius: 4px;
+letter-spacing: 1px;
+}
+​.item-header {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+margin-bottom: 12px;
+}
+​.item-title {
+font-size: 1.2rem;
+font-weight: bold;
+color: #fff;
+}
+​.item-price {
+font-size: 1.2rem;
+color: var(--accent-color);
+font-weight: bold;
+}
+​.item-desc {
+color: var(--text-muted);
+font-size: 0.95rem;
+}
+​.reservation {
+background-color: var(--card-bg);
+border-radius: 8px;
+padding: 50px;
+max-width: 700px;
+margin: 0 auto;
+border: 1px solid #2a2a2a;
+}
+​.form-group {
+margin-bottom: 20px;
+}
+​.form-group label {
+display: block;
+margin-bottom: 8px;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+​.form-group input, .form-group select, .form-group textarea {
+width: 100%;
+padding: 12px;
+background: #121212;
+border: 1px solid #333;
+border-radius: 4px;
+color: #fff;
+font-size: 1rem;
+}
+​.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+outline: none;
+border-color: var(--accent-color);
+}
+​.reservation button {
+width: 100%;
+padding: 14px;
+font-size: 1rem;
+}
+​footer {
+background: #0a0a0a;
+text-align: center;
+padding: 40px 20px;
+color: var(--text-muted);
+border-top: 1px solid #222;
+}
+​footer p {
+margin-bottom: 10px;
+}
+​@media (max-width: 768px) {
+.about-grid {
+grid-template-columns: 1fr;
+}
+.hero h1 {
+font-size: 2.5rem;
+}
+.nav-links {
+display: none;
+}
+}
+</style>
+</head>
+<body>
+​<header>
+<div class="nav-container">
+<div class="logo">Ресторан К. Макаревича</div>
+<ul class="nav-links">
+<li><a href="#about">О ресторане</a></li>
+<li><a href="#menu">Меню</a></li>
+<li><a href="#reservation">Забронировать</a></li>
+<li><a href="#contacts">Контакты</a></li>
+</ul>
+</div>
+</header>
+​<section class="hero">
+<h1>Ресторан Кирилла Макаревича</h1>
+<p>Авторская кухня, изысканная атмосфера и гастрономические шедевры высочайшего уровня.</p>
+<a href="#reservation" class="btn">Забронировать стол</a>
+</section>
+​<section id="about" class="container">
+<h2>О заведении</h2>
+<div class="about-grid">
+<div>
+<p style="margin-bottom: 20px;">Добро пожаловать в пространство вкуса, где кулинарные традиции встречаются с дерзким авторским видением шеф-повара и ресторатора Кирилла Макаревича. Каждое блюдо — это результат кропотливой работы с ингредиентами, уникальных техник приготовления и стремления подарить гостям незабываемые эмоции.</p>
+<p>Мы создали атмосферу, в которой одинаково комфортно проводить романтические вечера, деловые встречи и важные жизненные торжества.</p>
+</div>
+<div class="photo-placeholder">
+[ Сюда будет добавлена фотография ресторана / интерьера ]
+</div>
+</div>
+</section>
+​<section id="menu" class="container">
+<h2>Наше Меню</h2>
+​<div class="menu-category">
+<h3>Лидеры продаж & Специалитеты</h3>
+<div class="menu-grid">
+<div class="menu-item bestseller">
+<span class="badge">Хит продаж</span>
+<div class="item-header">
+<span class="item-title">Запеченный ёж в глине</span>
+<span class="item-price">45 BYN</span>
+</div>
+<p class="item-desc">Фирменный деликатес от шефа. Нежнейшее мясо, запечатанное в глиняном коконе с ароматными травами и авторскими специями. Подается с эксклюзивным соусом.</p>
+</div>
+​<div class="menu-item">
+<div class="item-header">
+<span class="item-title">Тартар из мраморной говядины</span>
+<span class="item-price">32 BYN</span>
+</div>
+<p class="item-desc">Подается с трюфельным кремом, перепелиным желтком и хрустящей бриошью.</p>
+</div>
+​<div class="menu-item">
+<div class="item-header">
+<span class="item-title">Утиная грудка с ягодным соусом</span>
+<span class="item-price">38 BYN</span>
+</div>
+<p class="item-desc">Идеальная степень прожарки, пюре из батата и соус на основе дикой смородины.</p>
+</div>
+</div>
+</div>
+​<div class="menu-category">
+<h3>Десерты</h3>
+<div class="menu-grid">
+<div class="menu-item">
+<div class="item-header">
+<span class="item-title">Авторский шоколадный трюфель</span>
+<span class="item-price">18 BYN</span>
+</div>
+<p class="item-desc">Темный бельгийский шоколад, морская соль и жидкая карамель.</p>
+</div>
+</div>
+</div>
+</section>
+​<section id="reservation" class="container">
+<h2>Заказ столика</h2>
+<div class="reservation">
+<form onsubmit="event.preventDefault(); alert('Спасибо! Ваша заявка на бронирование принята. Мы свяжемся с вами для подтверждения.');">
+<div class="form-group">
+<label for="name">Ваше имя</label>
+<input type="text" id="name" required placeholder="Иван">
+</div>
+<div class="form-group">
+<label for="phone">Телефон</label>
+<input type="tel" id="phone" required placeholder="+375 (29) XXX-XX-XX">
+</div>
+<div class="form-group">
+<label for="date">Дата</label>
+<input type="date" id="date" required>
+</div>
+<div class="form-group">
+<label for="time">Время</label>
+<select id="time" required>
+<option value="">Выберите время</option>
+<option value="17:00">17:00</option>
+<option value="18:30">18:30</option>
+<option value="20:00">20:00</option>
+<option value="21:30">21:30</option>
+</select>
+</div>
+<div class="form-group">
+<label for="guests">Количество гостей</label>
+<select id="guests" required>
+<option value="1">1 гость</option>
+<option value="2" selected>2 гостя</option>
+<option value="3">3 гостя</option>
+<option value="4">4 гостя</option>
+<option value="5+">5 и более гостей</option>
+</select>
+</div>
+<button type="submit" class="btn">Забронировать</button>
+</form>
+</div>
+</section>
+​<footer id="contacts">
+<div class="container" style="padding: 20px 0;">
+<p style="font-size: 1.25rem; color: #fff; margin-bottom: 10px;">Ресторан Кирилла Макаревича</p>
+<p>Телефон: +375 (29) 000-00-00</p>
+<p>Часы работы: Пн-Вс: 12:00 — 00:00</p>
+<p style="margin-top: 20px; font-size: 0.85rem;">© 2026 Все права защищены.</p>
+</div>
+</footer>
+​</body>
+</html>
